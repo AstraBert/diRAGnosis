@@ -1,6 +1,6 @@
-# Evaluation Framework Reference
+# diRAGnosis reference
 
-This document provides a reference for the functions contained in the `evaluation.py` file. These functions are used for generating question datasets, evaluating language learning models (LLMs), and evaluating retrieval performance.
+This document provides a reference for the functions contained in the `evaluation` module of the `diRAGnosis` package. These functions are used for generating question datasets, evaluating language learning models (LLMs), and evaluating retrieval performance.
 
 ## Functions
 
