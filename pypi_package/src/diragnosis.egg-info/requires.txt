@@ -1,0 +1,15 @@
+llama-index
+llama-index-embeddings-openai
+llama-index-embeddings-huggingface
+llama-index-embeddings-cohere
+llama-index-embeddings-mistralai
+llama-index-llms-openai
+llama-index-llms-cohere
+llama-index-llms-groq
+llama-index-llms-mistralai
+llama-index-llms-anthropic
+llama-index-vector-stores-qdrant
+fastembed
+qdrant_client
+pydantic
+pandas

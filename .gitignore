@@ -2,3 +2,5 @@ eval_framework.code-workspace
 qdrant_storage/
 .mypy_cache/
 test_data/
+pypi_package/dist/
+pypi_package/src/diragnosis.egg-info/

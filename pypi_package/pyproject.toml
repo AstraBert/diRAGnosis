@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "diragnosis"
-version = "0.0.0"
+version = "0.0.0.post1"
 authors = [
     { name="Clelia Astra Bertelli", email="astraberte9@gmail.com" },
 ]
-description = "RAGnosis - Diagnose the performance of your RAG!"
+description = "diRAGnosis - Diagnose the performance of your RAG!"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -40,7 +40,7 @@ Issues = "https://github.com/AstraBert/RAGnosis/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["ragnosis*"]
+include = ["diragnosis*"]
 
 [options.package_data]
-ragnosis = ["*"]
+diragnosis = ["*"]

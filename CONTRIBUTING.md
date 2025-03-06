@@ -1,4 +1,4 @@
-# Contributing to RAGnosis
+# Contributing to diRAGnosis
 
 Do you want to contribute to this project? Make sure to read this guidelines first :)
 

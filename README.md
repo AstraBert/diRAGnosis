@@ -24,7 +24,7 @@ git clone https://github.com/AstraBert/diRAGnosis.git
 cd diRAGnosis/
 ```
 
-**Docker (recommended)**🐋
+**Docker (recommended)🐋**
 
 > _Required: [Docker](https://docs.docker.com/desktop/) and [docker compose](https://docs.docker.com/compose/)_
 
