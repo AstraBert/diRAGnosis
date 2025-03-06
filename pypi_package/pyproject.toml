@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ragnosis"
+version = "0.0.0"
+authors = [
+    { name="Clelia Astra Bertelli", email="astraberte9@gmail.com" },
+]
+description = "RAGnosis - Diagnose the performance of your RAG!"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    'llama-index',
+    'llama-index-embeddings-openai',
+    'llama-index-embeddings-huggingface',
+    'llama-index-embeddings-cohere',
+    'llama-index-embeddings-mistralai',
+    'llama-index-llms-openai',
+    'llama-index-llms-cohere',
+    'llama-index-llms-groq',
+    'llama-index-llms-mistralai',
+    'llama-index-llms-anthropic',
+    'llama-index-vector-stores-qdrant',
+    'fastembed',
+    'qdrant_client',
+    'pydantic',
+    'pandas',
+]
+
+[project.urls]
+Homepage = "https://github.com/AstraBert/RAGnosis"
+Issues = "https://github.com/AstraBert/RAGnosis/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["ragnosis*"]
+
+[options.package_data]
+ragnosis = ["*"]

@@ -1,0 +1,10 @@
+FROM condaforge/miniforge3
+
+WORKDIR /dashboard/
+COPY ./docker/*.py /dashboard/
+COPY ./environment.yml /dashboard/
+COPY ./shell/ /dashboard/shell/
+
+RUN bash /dashboard/shell/conda_env.sh
+
+CMD ["bash", "/dashboard/shell/run.sh"]
