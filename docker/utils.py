@@ -11,6 +11,8 @@ from llama_index.llms.groq import Groq
 from llama_index.llms.anthropic import Anthropic
 from llama_index.llms.mistralai import MistralAI
 from llama_index.llms.cohere import Cohere
+from llama_index.llms.gemini import Gemini
+from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.mistralai import MistralAIEmbedding
 from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.embeddings.cohere import CohereEmbedding
@@ -21,11 +23,15 @@ import pandas as pd
 
 aqc = AsyncQdrantClient(host="db", port=6333)
 qc = QdrantClient(host="db", port=6333)
-name_to_model = {"OpenAI": OpenAI,"Groq": Groq,"Anthropic": Anthropic,"MistralAI": MistralAI,"Cohere": Cohere,}
+name_to_model = {"OpenAI": OpenAI,"Groq": Groq,"Anthropic": Anthropic,"MistralAI": MistralAI,"Cohere": Cohere, "Gemini": Gemini, "Ollama": Ollama}
 name_to_embedder = {"OpenAI": OpenAIEmbedding,"MistralAI": MistralAIEmbedding,"Cohere": CohereEmbedding,"HuggingFace": HuggingFaceEmbedding,}
 
+
 async def data_to_dataset(input_files: List[str], llm: str, model: str, api_key: str) -> Tuple[list, list]:
-    ai = name_to_model[llm](api_key=api_key, model=model)
+    if llm != "Ollama":
+        ai = name_to_model[llm](api_key=api_key, model=model)
+    else:
+        ai = name_to_model[llm](model=model)
     docs = SimpleDirectoryReader(input_files=input_files).load_data()
     print("Loaded Docs", flush=True)
     dataset_generator = RagDatasetGenerator.from_documents(documents=docs, llm=ai, num_questions_per_chunk=5,)
@@ -38,7 +44,10 @@ async def data_to_dataset(input_files: List[str], llm: str, model: str, api_key:
     return questions, docs
 
 async def evaluate_llms(llm: str, model: str, api_key: str, docs: list, questions: list, embedding_provider: str, embedding_model: str, api_key_embedding: str = "",  enable_hybrid: bool = False):
-    ai = name_to_model[llm](api_key=api_key, model=model)
+    if llm != "Ollama":
+        ai = name_to_model[llm](api_key=api_key, model=model)
+    else:
+        ai = name_to_model[llm](model=model)
     if embedding_provider == llm:
         if embedding_provider == "OpenAI":
             embedder = name_to_embedder[embedding_provider](model=embedding_model, api_key=api_key)
@@ -105,7 +114,10 @@ async def evaluate_retrieval(input_files: List[str], llm: str, model: str, api_k
     print("Loaded docs", flush=True)
     nodes = parser.get_nodes_from_documents(docs)
     print("Loaded nodes", flush=True)
-    ai = name_to_model[llm](api_key=api_key, model=model)
+    if llm != "Ollama":
+        ai = name_to_model[llm](api_key=api_key, model=model)
+    else:
+        ai = name_to_model[llm](model=model)
     qa_dataset = generate_question_context_pairs(
         nodes, llm=ai, num_questions_per_chunk=2
     )

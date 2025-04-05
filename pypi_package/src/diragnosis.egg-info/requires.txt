@@ -8,6 +8,8 @@ llama-index-llms-cohere
 llama-index-llms-groq
 llama-index-llms-mistralai
 llama-index-llms-anthropic
+llama-index-llms-gemini
+llama-index-llms-ollama
 llama-index-vector-stores-qdrant
 fastembed
 qdrant_client
