@@ -11,6 +11,8 @@ from llama_index.llms.groq import Groq
 from llama_index.llms.anthropic import Anthropic
 from llama_index.llms.mistralai import MistralAI
 from llama_index.llms.cohere import Cohere
+from llama_index.llms.gemini import Gemini
+from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.mistralai import MistralAIEmbedding
 from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.embeddings.cohere import CohereEmbedding
@@ -20,8 +22,8 @@ from typing import List, Tuple, Dict, Any
 import pandas as pd
 from pydantic import validate_call
 
-name_to_model = {"OpenAI": OpenAI,"Groq": Groq,"Anthropic": Anthropic,"MistralAI": MistralAI,"Cohere": Cohere,}
-name_to_embedder = {"OpenAI": OpenAIEmbedding,"MistralAI": MistralAIEmbedding,"Cohere": CohereEmbedding,"HuggingFace": HuggingFaceEmbedding,}
+name_to_model = {"OpenAI": OpenAI,"Groq": Groq,"Anthropic": Anthropic,"MistralAI": MistralAI,"Cohere": Cohere, "Gemini": Gemini, "Ollama": Ollama}
+name_to_embedder = {"OpenAI": OpenAIEmbedding,"MistralAI": MistralAIEmbedding,"Cohere": CohereEmbedding,"HuggingFace": HuggingFaceEmbedding}
 
 def display_available_providers() -> Dict[str, List[str]]:
     """
@@ -58,7 +60,10 @@ async def generate_question_dataset(input_files: List[str], llm: str, model: str
     """
     if llm not in name_to_model:
         raise ValueError(f"The LLM service provider is not among those supported, which are: {', '.join(list(name_to_model.keys()))}")
-    ai = name_to_model[llm](api_key=api_key, model=model)
+    if llm != "Ollama":
+        ai = name_to_model[llm](api_key=api_key, model=model)
+    else:
+        ai = name_to_model[llm](model=model)
     docs = SimpleDirectoryReader(input_files=input_files).load_data()
     if debug:
         print("Loaded Docs", flush=True)
@@ -110,7 +115,10 @@ async def evaluate_llms(qc: QdrantClient, aqc: AsyncQdrantClient, llm: str, mode
         raise ValueError(f"The LLM service provider is not among those supported, which are: {', '.join(list(name_to_model.keys()))}")
     if embedding_provider not in name_to_embedder:
         raise ValueError(f"The embedding models provider is not among those supported, which are: {', '.join(list(name_to_embedder.keys()))}")
-    ai = name_to_model[llm](api_key=api_key, model=model)
+    if llm != "Ollama":
+        ai = name_to_model[llm](api_key=api_key, model=model)
+    else:
+        ai = name_to_model[llm](model=model)
     if embedding_provider == llm:
         if embedding_provider == "OpenAI":
             embedder = name_to_embedder[embedding_provider](model=embedding_model, api_key=api_key)
@@ -204,7 +212,10 @@ async def evaluate_retrieval(qc: QdrantClient, aqc: AsyncQdrantClient, input_fil
     nodes = parser.get_nodes_from_documents(docs)
     if debug:
         print("Loaded nodes", flush=True)
-    ai = name_to_model[llm](api_key=api_key, model=model)
+    if llm != "Ollama":
+        ai = name_to_model[llm](api_key=api_key, model=model)
+    else:
+        ai = name_to_model[llm](model=model)
     qa_dataset = generate_question_context_pairs(
         nodes, llm=ai, num_questions_per_chunk=questions_per_chunk
     )

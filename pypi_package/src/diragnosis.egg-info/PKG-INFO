@@ -1,6 +1,6 @@
-Metadata-Version: 2.2
+Metadata-Version: 2.4
 Name: diragnosis
-Version: 0.0.0.post1
+Version: 0.0.1
 Summary: diRAGnosis - Diagnose the performance of your RAG!
 Author-email: Clelia Astra Bertelli <astraberte9@gmail.com>
 Project-URL: Homepage, https://github.com/AstraBert/RAGnosis
@@ -20,6 +20,8 @@ Requires-Dist: llama-index-llms-cohere
 Requires-Dist: llama-index-llms-groq
 Requires-Dist: llama-index-llms-mistralai
 Requires-Dist: llama-index-llms-anthropic
+Requires-Dist: llama-index-llms-gemini
+Requires-Dist: llama-index-llms-ollama
 Requires-Dist: llama-index-vector-stores-qdrant
 Requires-Dist: fastembed
 Requires-Dist: qdrant_client
